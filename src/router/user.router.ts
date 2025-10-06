@@ -8,7 +8,7 @@ import {
 const userRouter = Router();
 
 userRouter.get("/", getUserData);
-userRouter.put("/update", updateUserData);
+userRouter.put("/:id", updateUserData);
 userRouter.delete("/", removeUserData);
 
 export default userRouter;

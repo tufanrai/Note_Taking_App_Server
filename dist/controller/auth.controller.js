@@ -40,7 +40,8 @@ exports.loginUser = (0, asyncHandler_1.default)(async (req, res) => {
     if (!user) {
         throw new errorHandler_1.default("user does not exists", 404);
     }
-    const validPassword = (0, bcrypt_utils_1.verifyPassword)(password, user.password);
+    const validPassword = await (0, bcrypt_utils_1.verifyPassword)(password, user.password);
+    console.log(validPassword);
     if (!validPassword) {
         throw new errorHandler_1.default("either password or email is incorrect", 406);
     }

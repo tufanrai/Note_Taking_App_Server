@@ -5,6 +5,7 @@ import authRouter from "./router/auth.router";
 import userRouter from "./router/user.router";
 import noteRouter from "./router/note.router";
 import dbConfig from "./config/database.config";
+import { customError } from "./utils/errorHandler";
 
 const port = process.env.PORT ?? 8000;
 const uri = process.env.DB_URI ?? "";
@@ -18,6 +19,7 @@ app.use(
 );
 app.use(express.urlencoded());
 app.use(express.json());
+app.use(customError);
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);

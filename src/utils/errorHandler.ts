@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from "express";
+
 class errorHandler extends Error {
   statusCode: number;
   status: "success" | "fail" | "error";
@@ -12,5 +14,23 @@ class errorHandler extends Error {
     Error.captureStackTrace(this, errorHandler);
   }
 }
+
+export const customError = (
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const message = err.message || "server side error";
+  const status = err.status || "error";
+  const success = err.success || false;
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    message,
+    status,
+    success,
+  });
+};
 
 export default errorHandler;

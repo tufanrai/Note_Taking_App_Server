@@ -47,8 +47,8 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     throw new errorHandler("user does not exists", 404);
   }
 
-  const validPassword = verifyPassword(password, user.password);
-
+  const validPassword = await verifyPassword(password, user.password);
+  console.log(validPassword);
   if (!validPassword) {
     throw new errorHandler("either password or email is incorrect", 406);
   }

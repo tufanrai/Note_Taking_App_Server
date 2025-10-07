@@ -5,13 +5,13 @@ import Users from "../model/user.model";
 
 // get all the details of the user
 export const getUserData = asyncHandler(async (req: Request, res: Response) => {
-  const id = req.params;
+  const { id } = req.params;
 
   if (!id) {
     throw new errorHandler("please pass the user's id", 406);
   }
 
-  const user = await Users.findById(id);
+  const user = await Users.findOne({ _id: id });
 
   if (!user) {
     throw new errorHandler("user not found", 404);

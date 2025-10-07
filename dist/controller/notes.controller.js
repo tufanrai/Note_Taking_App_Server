@@ -9,15 +9,15 @@ const errorHandler_1 = __importDefault(require("../utils/errorHandler"));
 const note_model_1 = __importDefault(require("../model/note.model"));
 // create note
 exports.createNote = (0, asyncHandler_1.default)(async (req, res) => {
-    const { _id } = req.user;
+    const { userId } = req.user;
     const data = req.body;
-    if (!_id) {
+    if (!userId) {
         throw new errorHandler_1.default("please pass user's id", 406);
     }
     if (!data) {
         throw new errorHandler_1.default("please enter all the required data", 406);
     }
-    const note = await note_model_1.default.create({ userId: _id, ...data });
+    const note = await note_model_1.default.create({ userId: userId, ...data });
     res.status(200).json({
         message: "note successifuly created",
         data: note,
@@ -27,8 +27,8 @@ exports.createNote = (0, asyncHandler_1.default)(async (req, res) => {
 });
 // get all notes
 exports.getAllNotes = (0, asyncHandler_1.default)(async (req, res) => {
-    const { _id } = req.user;
-    const notes = await note_model_1.default.find({ userID: _id });
+    const { userId } = req.user;
+    const notes = await note_model_1.default.find({ userId: userId });
     if (!notes) {
         throw new errorHandler_1.default("you do not have any notes", 404);
     }
@@ -41,12 +41,14 @@ exports.getAllNotes = (0, asyncHandler_1.default)(async (req, res) => {
 });
 // get specific note
 exports.specificNote = (0, asyncHandler_1.default)(async (req, res) => {
-    const { _id } = req.user;
-    const noteId = req.params;
-    if (!noteId) {
+    const { userId } = req.user;
+    const { id } = req.params;
+    console.log("this is a specific note id", id);
+    if (!id) {
         throw new errorHandler_1.default("please enter the note id", 406);
     }
-    const note = await note_model_1.default.findOne({ _id: noteId, userID: _id });
+    const note = await note_model_1.default.findOne({ _id: id });
+    console.log(note);
     if (!note) {
         throw new errorHandler_1.default("not not found", 404);
     }
@@ -59,13 +61,13 @@ exports.specificNote = (0, asyncHandler_1.default)(async (req, res) => {
 });
 // update note
 exports.updateNote = (0, asyncHandler_1.default)(async (req, res) => {
-    const { _id } = req.user;
+    const { userId } = req.user;
     const noteId = req.params;
     const data = req.body;
     if (!noteId) {
         throw new errorHandler_1.default("please enter the note id", 406);
     }
-    const note = await note_model_1.default.findOne({ _id: noteId, userID: _id });
+    const note = await note_model_1.default.findOne({ _id: noteId, userID: userId });
     if (!note) {
         throw new errorHandler_1.default("not not found", 404);
     }
@@ -83,12 +85,12 @@ exports.updateNote = (0, asyncHandler_1.default)(async (req, res) => {
 });
 // remove note
 exports.deleteNote = (0, asyncHandler_1.default)(async (req, res) => {
-    const { _id } = req.user;
+    const { userId } = req.user;
     const noteId = req.params;
     if (!noteId) {
         throw new errorHandler_1.default("please enter the note id ", 406);
     }
-    const note = await note_model_1.default.findOneAndDelete({ _id: noteId, userId: _id });
+    const note = await note_model_1.default.findOneAndDelete({ _id: noteId, userId: userId });
     res.status(200).json({
         message: "note successfuly removed",
         data: note,

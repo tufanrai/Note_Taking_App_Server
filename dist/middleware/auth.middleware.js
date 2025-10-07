@@ -22,11 +22,12 @@ const authenticateUser = async (req, res, next) => {
         if (!validToken) {
             throw new errorHandler_1.default("token expired please login again", 406);
         }
-        if (validToken.exp && validToken.exp < Date.now()) {
+        if (validToken.exp && validToken.exp > Date.now()) {
             throw new errorHandler_1.default("token expired please login again", 406);
         }
+        console.log(validToken._id);
         req.user = {
-            _id: validToken._id,
+            userId: validToken._id,
             full_name: validToken.full_name,
             email: validToken.email,
         };
@@ -36,4 +37,5 @@ const authenticateUser = async (req, res, next) => {
         next(err);
     }
 };
+exports.default = authenticateUser;
 //# sourceMappingURL=auth.middleware.js.map

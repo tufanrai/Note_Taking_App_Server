@@ -30,12 +30,14 @@ const authenticateUser = async (
       throw new errorHandler("token expired please login again", 406);
     }
 
-    if (validToken.exp && validToken.exp < Date.now()) {
+    if (validToken.exp && validToken.exp > Date.now()) {
       throw new errorHandler("token expired please login again", 406);
     }
 
+    console.log(validToken._id);
+
     req.user = {
-      _id: validToken._id,
+      userId: validToken._id,
       full_name: validToken.full_name,
       email: validToken.email,
     };
@@ -45,3 +47,5 @@ const authenticateUser = async (
     next(err);
   }
 };
+
+export default authenticateUser;

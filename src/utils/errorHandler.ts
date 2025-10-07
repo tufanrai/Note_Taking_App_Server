@@ -27,6 +27,7 @@ export const customError = (
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode).json({
+    statusCode,
     message,
     status,
     success,

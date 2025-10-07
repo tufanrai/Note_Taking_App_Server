@@ -9,11 +9,11 @@ const errorHandler_1 = __importDefault(require("../utils/errorHandler"));
 const user_model_1 = __importDefault(require("../model/user.model"));
 // get all the details of the user
 exports.getUserData = (0, asyncHandler_1.default)(async (req, res) => {
-    const id = req.params;
+    const { id } = req.params;
     if (!id) {
         throw new errorHandler_1.default("please pass the user's id", 406);
     }
-    const user = await user_model_1.default.findById(id);
+    const user = await user_model_1.default.findOne({ _id: id });
     if (!user) {
         throw new errorHandler_1.default("user not found", 404);
     }

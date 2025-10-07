@@ -4,11 +4,12 @@ import {
   updateUserData,
   removeUserData,
 } from "../controller/user.controller";
+import authenticateUser from "../middleware/auth.middleware";
 
 const userRouter = Router();
 
-userRouter.get("/", getUserData);
-userRouter.put("/:id", updateUserData);
-userRouter.delete("/", removeUserData);
+userRouter.get("/:id", authenticateUser, getUserData);
+userRouter.put("/:id", authenticateUser, updateUserData);
+userRouter.delete("/", authenticateUser, removeUserData);
 
 export default userRouter;

@@ -7,7 +7,7 @@ export interface IPayload {
     birth: string;
 }
 export interface IUser {
-    _id: mongoose.Types.ObjectId;
+    userId: mongoose.Types.ObjectId;
     full_name: string;
     email: string;
 }

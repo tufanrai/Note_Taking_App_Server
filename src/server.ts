@@ -19,10 +19,10 @@ app.use(
 );
 app.use(express.urlencoded());
 app.use(express.json());
-app.use(customError);
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/notes", noteRouter);
+app.use(customError);
 
 app.listen(port, () => console.log(`server started on port: ${port}🚀`));

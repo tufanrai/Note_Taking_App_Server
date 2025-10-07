@@ -20,9 +20,9 @@ app.use((0, cors_1.default)({
 }));
 app.use(express_1.default.urlencoded());
 app.use(express_1.default.json());
-app.use(errorHandler_1.customError);
 app.use("/api/auth", auth_router_1.default);
 app.use("/api/user", user_router_1.default);
 app.use("/api/notes", note_router_1.default);
+app.use(errorHandler_1.customError);
 app.listen(port, () => console.log(`server started on port: ${port}🚀`));
 //# sourceMappingURL=server.js.map

@@ -6,10 +6,10 @@ import Notes from "../model/note.model";
 
 // create note
 export const createNote = asyncHandler(async (req: Request, res: Response) => {
-  const { _id } = req.user;
+  const { userId } = req.user;
   const data = req.body;
 
-  if (!_id) {
+  if (!userId) {
     throw new errorHandler("please pass user's id", 406);
   }
 
@@ -17,7 +17,7 @@ export const createNote = asyncHandler(async (req: Request, res: Response) => {
     throw new errorHandler("please enter all the required data", 406);
   }
 
-  const note = await Notes.create({ userId: _id, ...data });
+  const note = await Notes.create({ userId: userId, ...data });
 
   res.status(200).json({
     message: "note successifuly created",
@@ -29,9 +29,9 @@ export const createNote = asyncHandler(async (req: Request, res: Response) => {
 
 // get all notes
 export const getAllNotes = asyncHandler(async (req: Request, res: Response) => {
-  const { _id } = req.user;
+  const { userId } = req.user;
 
-  const notes = await Notes.find({ userID: _id });
+  const notes = await Notes.find({ userId: userId });
 
   if (!notes) {
     throw new errorHandler("you do not have any notes", 404);
@@ -48,14 +48,17 @@ export const getAllNotes = asyncHandler(async (req: Request, res: Response) => {
 // get specific note
 export const specificNote = asyncHandler(
   async (req: Request, res: Response) => {
-    const { _id } = req.user;
-    const noteId = req.params;
+    const { userId } = req.user;
+    const { id } = req.params;
 
-    if (!noteId) {
+    console.log("this is a specific note id", id);
+
+    if (!id) {
       throw new errorHandler("please enter the note id", 406);
     }
 
-    const note = await Notes.findOne({ _id: noteId, userID: _id });
+    const note = await Notes.findOne({ _id: id });
+    console.log(note);
 
     if (!note) {
       throw new errorHandler("not not found", 404);
@@ -72,7 +75,7 @@ export const specificNote = asyncHandler(
 
 // update note
 export const updateNote = asyncHandler(async (req: Request, res: Response) => {
-  const { _id } = req.user;
+  const { userId } = req.user;
   const noteId = req.params;
   const data = req.body;
 
@@ -80,7 +83,7 @@ export const updateNote = asyncHandler(async (req: Request, res: Response) => {
     throw new errorHandler("please enter the note id", 406);
   }
 
-  const note = await Notes.findOne({ _id: noteId, userID: _id });
+  const note = await Notes.findOne({ _id: noteId, userID: userId });
 
   if (!note) {
     throw new errorHandler("not not found", 404);
@@ -101,14 +104,14 @@ export const updateNote = asyncHandler(async (req: Request, res: Response) => {
 
 // remove note
 export const deleteNote = asyncHandler(async (req: Request, res: Response) => {
-  const { _id } = req.user;
+  const { userId } = req.user;
   const noteId = req.params;
 
   if (!noteId) {
     throw new errorHandler("please enter the note id ", 406);
   }
 
-  const note = await Notes.findOneAndDelete({ _id: noteId, userId: _id });
+  const note = await Notes.findOneAndDelete({ _id: noteId, userId: userId });
 
   res.status(200).json({
     message: "note successfuly removed",

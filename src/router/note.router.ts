@@ -6,13 +6,14 @@ import {
   updateNote,
   deleteNote,
 } from "../controller/notes.controller";
+import authenticateUser from "../middleware/auth.middleware";
 
 const noteRouter = Router();
 
-noteRouter.post("/", createNote);
-noteRouter.get("/", getAllNotes);
-noteRouter.get("/:id", specificNote);
-noteRouter.put("/:id", updateNote);
-noteRouter.delete("/:id", deleteNote);
+noteRouter.post("/", authenticateUser, createNote);
+noteRouter.get("/", authenticateUser, getAllNotes);
+noteRouter.get("/:id", authenticateUser, specificNote);
+noteRouter.put("/:id", authenticateUser, updateNote);
+noteRouter.delete("/:id", authenticateUser, deleteNote);
 
 export default noteRouter;

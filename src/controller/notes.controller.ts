@@ -76,14 +76,14 @@ export const specificNote = asyncHandler(
 // update note
 export const updateNote = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = req.user;
-  const noteId = req.params;
+  const { id } = req.params;
   const data = req.body;
 
-  if (!noteId) {
+  if (!id) {
     throw new errorHandler("please enter the note id", 406);
   }
 
-  const note = await Notes.findOne({ _id: noteId, userID: userId });
+  const note = await Notes.findById({ _id: id });
 
   if (!note) {
     throw new errorHandler("not not found", 404);
@@ -105,13 +105,13 @@ export const updateNote = asyncHandler(async (req: Request, res: Response) => {
 // remove note
 export const deleteNote = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = req.user;
-  const noteId = req.params;
+  const { id } = req.params;
 
-  if (!noteId) {
+  if (!id) {
     throw new errorHandler("please enter the note id ", 406);
   }
 
-  const note = await Notes.findOneAndDelete({ _id: noteId, userId: userId });
+  const note = await Notes.findOneAndDelete({ _id: id, userId: userId });
 
   res.status(200).json({
     message: "note successfuly removed",

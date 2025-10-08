@@ -62,12 +62,12 @@ exports.specificNote = (0, asyncHandler_1.default)(async (req, res) => {
 // update note
 exports.updateNote = (0, asyncHandler_1.default)(async (req, res) => {
     const { userId } = req.user;
-    const noteId = req.params;
+    const { id } = req.params;
     const data = req.body;
-    if (!noteId) {
+    if (!id) {
         throw new errorHandler_1.default("please enter the note id", 406);
     }
-    const note = await note_model_1.default.findOne({ _id: noteId, userID: userId });
+    const note = await note_model_1.default.findById({ _id: id });
     if (!note) {
         throw new errorHandler_1.default("not not found", 404);
     }
@@ -86,11 +86,11 @@ exports.updateNote = (0, asyncHandler_1.default)(async (req, res) => {
 // remove note
 exports.deleteNote = (0, asyncHandler_1.default)(async (req, res) => {
     const { userId } = req.user;
-    const noteId = req.params;
-    if (!noteId) {
+    const { id } = req.params;
+    if (!id) {
         throw new errorHandler_1.default("please enter the note id ", 406);
     }
-    const note = await note_model_1.default.findOneAndDelete({ _id: noteId, userId: userId });
+    const note = await note_model_1.default.findOneAndDelete({ _id: id, userId: userId });
     res.status(200).json({
         message: "note successfuly removed",
         data: note,

@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-app.use("/api/notes", noteRouter);
+app.use("/api/", noteRouter);
 app.use(customError);
 
 app.listen(port, () => console.log(`server started on port: ${port}🚀`));

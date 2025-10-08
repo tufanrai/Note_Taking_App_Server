@@ -10,6 +10,6 @@ const userRouter = Router();
 
 userRouter.get("/:id", authenticateUser, getUserData);
 userRouter.put("/:id", authenticateUser, updateUserData);
-userRouter.delete("/", authenticateUser, removeUserData);
+userRouter.delete("/:id", authenticateUser, removeUserData);
 
 export default userRouter;

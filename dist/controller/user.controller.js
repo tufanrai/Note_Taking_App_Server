@@ -26,7 +26,7 @@ exports.getUserData = (0, asyncHandler_1.default)(async (req, res) => {
 });
 // update user's data
 exports.updateUserData = (0, asyncHandler_1.default)(async (req, res) => {
-    const id = req.params;
+    const { id } = req.params;
     const data = req.body;
     if (!id) {
         throw new errorHandler_1.default("please enter the user's id", 406);

@@ -28,7 +28,7 @@ export const getUserData = asyncHandler(async (req: Request, res: Response) => {
 // update user's data
 export const updateUserData = asyncHandler(
   async (req: Request, res: Response) => {
-    const id = req.params;
+    const { id } = req.params;
     const data = req.body;
 
     if (!id) {

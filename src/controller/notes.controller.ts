@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler";
 import errorHandler from "../utils/errorHandler";
-import Users from "../model/user.model";
 import Notes from "../model/note.model";
 
 // create note

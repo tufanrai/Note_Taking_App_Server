@@ -49,7 +49,6 @@ exports.loginUser = (0, asyncHandler_1.default)(async (req, res) => {
         full_name: user.full_name,
         email: user.email,
         password: user.password,
-        birth: user.birth,
     });
     res.status(200).json({
         message: "user successfuly loged in",

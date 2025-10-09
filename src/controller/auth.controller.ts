@@ -58,7 +58,6 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     full_name: user.full_name,
     email: user.email,
     password: user.password,
-    birth: user.birth,
   });
 
   res.status(200).json({

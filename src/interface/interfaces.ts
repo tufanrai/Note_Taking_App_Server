@@ -5,7 +5,6 @@ export interface IPayload {
   full_name: string;
   email: string;
   password: string;
-  birth: string;
 }
 
 export interface IUser {
